@@ -8,6 +8,6 @@ RUN wget https://github.com/stedolan/jq/releases/download/jq-1.7/jq-linux64 && \
   mv jq-linux64 /usr/local/bin/jq && \
   chmod +x /usr/local/bin/jq
 
-COPY ./load-env.sh load-env.sh
+COPY ./parse-config.sh parse-config.sh
 
-ENTRYPOINT [ "bash", "load-env.sh" ]
+ENTRYPOINT [ "bash", "parse-config.sh" ]
