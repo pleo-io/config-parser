@@ -17,7 +17,7 @@ load_ssm_files() {
       KEY="${KEY:1}"
 
       VALUE=$(cat $FILENAME)
-      result+="$KEY=$VALUE\n"
+      result="${result}$KEY=$VALUE\n"
     fi
   done
   
