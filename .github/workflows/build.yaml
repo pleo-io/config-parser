@@ -1,0 +1,57 @@
+name: Bash package
+
+on: [ push ]
+
+env:
+  IMAGE_NAME: config-parser
+
+jobs:
+  test:
+    name: "Test"
+    runs-on: ubuntu-latest
+    if: ${{ github.event.repository.default_branch != github.ref_name }}
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Start infrastructure
+        run: |
+          make start-infrastructure
+
+      - name: Run tests
+        run: |
+          make -B test
+
+      - name: Cleanup infrastructure
+        run: |
+          make cleanup-infrastructure
+
+  publish:
+    name: "Publish"
+    runs-on: ubuntu-latest
+    if: ${{ github.event.repository.default_branch == github.ref_name }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2.4.0
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ github.sha }} . --build-arg github_sha=${{ github.sha }}
+
+      - name: Log in to registry
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Push image
+        if: ${{ github.event.repository.default_branch == github.ref_name }}
+        run: |
+          IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
+
+          # Change all uppercase to lowercase
+          IMAGE_ID=$(echo $IMAGE_ID | tr '[A-Z]' '[a-z]')
+          # Strip git ref prefix from version
+          VERSION=${{ github.sha }}
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag ${{ github.sha }} $IMAGE_ID:$VERSION
+          docker tag ${{ github.sha }} $IMAGE_ID:latest
+          docker push $IMAGE_ID:$VERSION
+          docker push $IMAGE_ID:latest

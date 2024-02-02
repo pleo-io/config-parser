@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://app.opslevel.com/public/opslevel.schema.yml
+---
+version: 1
+service:
+  name: config-parser
+  lifecycle: alpha
+  owner: sre
+  language: bash
+  description: |-
+    Library in charge parsing config files
+  repositories:
+    - name: pleo-io/config-parser
+      path: "/"
+      provider: github
+  tags:
+    - key: type
+      value: library

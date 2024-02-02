@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  env-loader:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    volumes:
+      - ./test/fixture/volumes:/etc
+  validator:
+    depends_on: [ env-loader ]
+    build:
+      dockerfile: Dockerfile
+      context: ./test
+    volumes:
+      - ./test/fixture/volumes:/etc
+      - ./test/expectation:/expectation
