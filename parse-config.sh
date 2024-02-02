@@ -27,5 +27,5 @@ load_ssm_files() {
 SSM_VARS=$(load_ssm_files "./etc/ssm")
 
 # Do not use cat here, we use printf to render new lines in output file
-printf "$SSM_VARS" > /etc/.env
+printf "$SSM_VARS" > /etc/env/.env
 
