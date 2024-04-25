@@ -16,7 +16,7 @@ load_dir() {
         KEY=$(echo $FILENAME | tr '_' '.')
 
         # We strip the first character since it's always a '_'
-        KEY="${KEY:1}"
+        KEY="${KEY:$2}"
 
         VALUE=$(cat $FILENAME)
         result="${result}$KEY=$VALUE\n"
@@ -30,8 +30,8 @@ load_dir() {
 # We have 3 directories to load env variables from:
 #   1. /etc/ssm
 #   2. /etc/secret
-SSM_VARS=$(load_dir "./etc/ssm")
-SECRET_VARS=$(load_dir "./etc/secret")
+SSM_VARS=$(load_dir "./etc/ssm" 1)
+SECRET_VARS=$(load_dir "./etc/secret" 0)
 
 ENV_VARS=""
 if [ "$SSM_VARS" != "" ]; then
