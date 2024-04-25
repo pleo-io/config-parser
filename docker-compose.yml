@@ -7,7 +7,7 @@ services:
       context: .
     volumes:
       - ./test/fixture/volumes:/etc
-      - shared-tmpfs:/etc/env
+      - env:/etc/env
   validator:
     depends_on: [ env-loader ]
     build:
@@ -16,12 +16,8 @@ services:
     volumes:
       - ./test/fixture/volumes:/etc
       - ./test/expectation:/expectation
-      - shared-tmpfs:/etc/env
+      - env:/etc/env
 
 volumes:
-  shared-tmpfs:
+  env:
     driver: local
-    driver_opts:
-      type: "tmpfs"
-      device: "tmpfs"
-      o: "size=256m,uid=1000"
