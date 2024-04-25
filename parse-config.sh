@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
-load_ssm_files() {
+load_dir() {
   # $1, the first parameter is the directory to load files from
   local result=''
 
@@ -23,9 +23,22 @@ load_ssm_files() {
   
   echo "$result"
 }
+ 
+# We have 3 directories to load env variables from:
+#   1. /etc/ssm
+#   2. /etc/secret
+SSM_VARS=$(load_dir "./etc/ssm")
+SECRET_VARS=$(load_dir "./etc/secret")
 
-SSM_VARS=$(load_ssm_files "./etc/ssm")
+ENV_VARS=""
+if [ "$SSM_VARS" != "" ]; then
+  ENV_VARS+="$SSM_VARS"
+fi
+
+if [ "$SECRET_VARS" != "" ]; then
+  ENV_VARS+="$SECRET_VARS"
+fi
 
 # Do not use cat here, we use printf to render new lines in output file
-printf "$SSM_VARS" > /etc/env/.env
+printf "$ENV_VARS" > /etc/env/.env
 
