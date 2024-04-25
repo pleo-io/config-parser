@@ -2,25 +2,28 @@
 
 # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
 load_dir() {
-  # $1, the first parameter is the directory to load files from
   local result=''
-
-  cd $1
-  for FILENAME in *; do
-    # Make sure the directory is not empty
-    if [ "$FILENAME" != "*" ]; then
-      # First tr uppercases all letters
-      # Second tr replaces underscores with dashes
-      KEY=$(echo $FILENAME | tr '_' '.')
-
-      # We strip the first character since it's always a '_'
-      KEY="${KEY:1}"
-
-      VALUE=$(cat $FILENAME)
-      result="${result}$KEY=$VALUE\n"
-    fi
-  done
   
+  # $1, the first parameter is the directory to load files from
+  if [ -d $1 ]; then
+    cd $1
+
+    for FILENAME in *; do
+      # Make sure the directory is not empty
+      if [ "$FILENAME" != "*" ]; then
+        # First tr uppercases all letters
+        # Second tr replaces underscores with dashes
+        KEY=$(echo $FILENAME | tr '_' '.')
+
+        # We strip the first character since it's always a '_'
+        KEY="${KEY:1}"
+
+        VALUE=$(cat $FILENAME)
+        result="${result}$KEY=$VALUE\n"
+      fi
+    done
+  fi
+
   echo "$result"
 }
  
