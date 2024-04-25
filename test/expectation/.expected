@@ -1,2 +1,4 @@
-S3-SPUTNIK-BUCKET-NAME-URL=https://sputnik-buckname.name.com
-SQS-SPUTNIK-ENDPOINT-URL=21321331241.aws.pleo.io
+s3.sputnik.bucket-name.url=https://sputnik-buckname.name.com
+sqs.sputnik.endpoint.url=21321331241.aws.pleo.io
+launch.darkly.key=secret_value
+openai.api.key=beepboop

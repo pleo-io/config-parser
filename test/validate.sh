@@ -1,6 +1,6 @@
 #!/bin/bash
 
-result="/etc/.env"
+result="/etc/env/.env"
 expected="/expectation/.expected"
 
 if cmp -s "$result" "$expected"; then
