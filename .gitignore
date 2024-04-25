@@ -1,0 +1,4 @@
+fixture/volumes/env
+fixture/volumes/hostname
+fixture/volumes/hosts
+fixture/volumes/resolv.conf
