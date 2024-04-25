@@ -9,12 +9,12 @@ load_ssm_files() {
   for FILENAME in *; do
     # Make sure the directory is not empty
     if [ "$FILENAME" != "*" ]; then
+      # We strip the first character since it's always a '_'
+      KEY="${KEY:1}"
+      
       # First tr uppercases all letters
       # Second tr replaces underscores with dashes
-      KEY=$(echo $FILENAME | tr '[a-z]' '[A-Z]' | tr '_' '-')
-      
-      # We strip the first character since it's always a '-'
-      KEY="${KEY:1}"
+      KEY=$(echo $FILENAME | tr '_' '.')
 
       VALUE=$(cat $FILENAME)
       result="${result}$KEY=$VALUE\n"
