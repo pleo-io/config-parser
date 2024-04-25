@@ -15,8 +15,8 @@ load_dir() {
         # Second tr replaces underscores with dashes
         KEY=$(echo $FILENAME | tr '_' '.')
 
-        # We strip the first character since it's always a '_'
-        KEY="${KEY:1}"
+        # $2, is the numbers of characters to strip in front of the key
+        KEY="${KEY:$2}"
 
         VALUE=$(cat $FILENAME)
         result="${result}$KEY=$VALUE\n"
@@ -30,8 +30,11 @@ load_dir() {
 # We have 3 directories to load env variables from:
 #   1. /etc/ssm
 #   2. /etc/secret
-SSM_VARS=$(load_dir "./etc/ssm")
-SECRET_VARS=$(load_dir "./etc/secret")
+
+# For SSM, we strip the first character since it's always a '_'
+SSM_VARS=$(load_dir "./etc/ssm" 1)
+
+SECRET_VARS=$(load_dir "./etc/secret" 0)
 
 ENV_VARS=""
 if [ "$SSM_VARS" != "" ]; then
