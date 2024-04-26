@@ -4,25 +4,25 @@ load_dir() {
   local result=''
 
   # $1, the first parameter is the directory to load files from
-  # if [ -d $1 ]; then
-  cd $1
+  if [ -d $1 ]; then
+    cd $1
 
-  # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
-  for FILENAME in *; do
-    # Make sure the directory is not empty
-    if [ "$FILENAME" != "*" ]; then
-      # First tr uppercases all letters
-      # Second tr replaces underscores with dashes
-      KEY=$(echo $FILENAME | tr '_' '.')
+    # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
+    for FILENAME in *; do
+      # Make sure the directory is not empty
+      if [ "$FILENAME" != "*" ]; then
+        # First tr uppercases all letters
+        # Second tr replaces underscores with dashes
+        KEY=$(echo $FILENAME | tr '_' '.')
 
-      # $2, is the numbers of characters to strip in front of the key
-      KEY="${KEY:$2}"
+        # $2, is the numbers of characters to strip in front of the key
+        KEY="${KEY:$2}"
 
-      VALUE=$(cat $FILENAME)
-      result="${result}$KEY=$VALUE\n"
-    fi
-  done
-  # fi
+        VALUE=$(cat $FILENAME)
+        result="${result}$KEY=$VALUE\n"
+      fi
+    done
+  fi
 
   echo "$result"
 }
