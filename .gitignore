@@ -2,3 +2,4 @@ test/fixture/volumes/env
 test/fixture/volumes/hostname
 test/fixture/volumes/hosts
 test/fixture/volumes/resolv.conf
+test/fixture/volumes/.env
