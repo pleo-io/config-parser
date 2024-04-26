@@ -31,8 +31,6 @@ load_dir() {
 #   1. $WORKDIR/ssm
 #   2. $WORKDIR/secret
 
-echo "hi"
-
 # For SSM, we strip the first character since it's always a '_'
 SSM_VARS=$(load_dir "$WORKDIR/ssm" 1)
 
