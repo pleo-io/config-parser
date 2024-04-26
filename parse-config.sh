@@ -14,10 +14,12 @@ load_dir() {
         # Replaces underscores with dots
         KEY=$(echo $FILENAME | tr '_' '.')
 
+        # Removes the infrastructure.global prefix if it exists
         if [[ $KEY == infrastructure.global.* ]]; then
           KEY=${KEY#"infrastructure.global."}
         fi
 
+        # Removes the .terraform suffix if it exists
         if [[ $KEY == *.terraform ]]; then
           KEY=${KEY%".terraform"}
         fi
@@ -57,5 +59,5 @@ if [ "$SECRET_VARS" != "" ]; then
 fi
 
 # Do not use cat here, we use printf to render new lines in output file
-printf "$ENV_VARS" > $WORKDIR/.env
+printf "$ENV_VARS" > $WORKDIR/application.properties
 

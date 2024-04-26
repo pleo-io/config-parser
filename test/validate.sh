@@ -1,6 +1,6 @@
 #!/bin/bash
 
-result="$WORKDIR/.env"
+result="$WORKDIR/application.properties"
 expected="/expectation/.expected"
 
 if cmp -s "$result" "$expected"; then
