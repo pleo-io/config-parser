@@ -5,19 +5,22 @@ services:
     build:
       dockerfile: Dockerfile
       context: .
+    environment:
+      - WORKDIR
     volumes:
-      - ./test/fixture/volumes:/etc
-      - env:/etc/env
+      - env:$WORKDIR
+      - ./test/fixture/volumes/secret:$WORKDIR/secret
+      - ./test/fixture/volumes/ssm:$WORKDIR/ssm
   validator:
     depends_on: [ env-loader ]
     build:
       dockerfile: Dockerfile
       context: ./test
+    environment:
+      - WORKDIR
     volumes:
-      - ./test/fixture/volumes:/etc
+      - env:$WORKDIR
       - ./test/expectation:/expectation
-      - env:/etc/env
-
 volumes:
   env:
     driver: local
