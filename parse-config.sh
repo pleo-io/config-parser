@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
 load_dir() {
   local result=''
-  
+
   # $1, the first parameter is the directory to load files from
   if [ -d $1 ]; then
     cd $1
 
+    # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
     for FILENAME in *; do
       # Make sure the directory is not empty
       if [ "$FILENAME" != "*" ]; then
@@ -26,15 +26,21 @@ load_dir() {
 
   echo "$result"
 }
- 
+
 # We have 3 directories to load env variables from:
-#   1. /etc/ssm
-#   2. /etc/secret
+#   1. $WORKDIR/ssm
+#   2. $WORKDIR/secret
+
+echo "hi"
 
 # For SSM, we strip the first character since it's always a '_'
-SSM_VARS=$(load_dir "./etc/ssm" 1)
+SSM_VARS=$(load_dir "$WORKDIR/ssm" 1)
 
-SECRET_VARS=$(load_dir "./etc/secret" 0)
+echo "$SSM_VARS"
+
+SECRET_VARS=$(load_dir "$WORKDIR/secret" 0)
+
+echo "$SECRET_VARS"
 
 ENV_VARS=""
 if [ "$SSM_VARS" != "" ]; then
@@ -46,5 +52,5 @@ if [ "$SECRET_VARS" != "" ]; then
 fi
 
 # Do not use cat here, we use printf to render new lines in output file
-printf "$ENV_VARS" > /etc/env/.env
+printf "$ENV_VARS" > $WORKDIR/.env
 
