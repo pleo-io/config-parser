@@ -11,9 +11,16 @@ load_dir() {
     for FILENAME in *; do
       # Make sure the directory is not empty
       if [ "$FILENAME" != "*" ]; then
-        # First tr uppercases all letters
-        # Second tr replaces underscores with dashes
+        # Replaces underscores with dots
         KEY=$(echo $FILENAME | tr '_' '.')
+
+        if [[ $KEY == infrastructure.global.* ]]; then
+          KEY=${KEY#"infrastructure.global."}
+        fi
+
+        if [[ $KEY == *.terraform ]]; then
+          KEY=${KEY%".terraform"}
+        fi
 
         # $2, is the numbers of characters to strip in front of the key
         KEY="${KEY:$2}"
