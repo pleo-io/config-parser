@@ -14,6 +14,9 @@ load_dir() {
         # Replaces underscores with dots
         KEY=$(echo $FILENAME | tr '_' '.')
 
+        # $2, is the numbers of characters to strip in front of the key
+        KEY="${KEY:$2}"
+
         # Removes the infrastructure.global prefix if it exists
         if [[ $KEY == infrastructure.global.* ]]; then
           KEY=${KEY#"infrastructure.global."}
@@ -23,9 +26,6 @@ load_dir() {
         if [[ $KEY == *.terraform ]]; then
           KEY=${KEY%".terraform"}
         fi
-
-        # $2, is the numbers of characters to strip in front of the key
-        KEY="${KEY:$2}"
 
         VALUE=$(cat $FILENAME)
         result="${result}$KEY=$VALUE\n"
