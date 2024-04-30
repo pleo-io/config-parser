@@ -23,13 +23,8 @@ load_dir() {
         fi
 
         # Removes the application.$application_name prefix if it exists
-        if [[ "$KEY" == "application."* ]]; then
-          KEY=${KEY#"application."}
-        fi
-
-        # Removes the application.$application_name prefix if it exists
-        if [[ "$KEY" == "$APPLICATION_NAME."* ]]; then
-          KEY=${KEY#$APPLICATION_NAME.}
+        if [[ "$KEY" == "application.$3"* ]]; then
+          KEY=${KEY#"application.$3."}
         fi
 
         # Removes the .terraform suffix if it exists
@@ -51,10 +46,10 @@ load_dir() {
 #   2. $WORKDIR/aws-secret
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
-AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
+AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1 $APPLICATION_NAME)
 echo "$AWS_PARAMETER_STORE_VARS"
 
-AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
+AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0 $APPLICATION_NAME)
 echo "$AWS_SECRET_VARS"
 
 ENV_VARS=""
