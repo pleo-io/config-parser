@@ -22,13 +22,13 @@ load_dir() {
           KEY=${KEY#"infrastructure.global."}
         fi
         
-        if [[ $KEY =~ ^"application." ]]; then
+        if [[ "$KEY" =~ ^"application." ]]; then
           KEY=${KEY#"application."}
         fi
 
-        PRE="$APPLICATION_NAME."
-        if [[ $KEY =~ ^"$PRE" ]]; then
-          KEY=${KEY#"$PRE"}
+        PRE=$APPLICATION_NAME"."
+        if [[ "$KEY" =~ ^$PRE ]]; then
+          KEY=${KEY#$PRE}
         fi
 
         # Removes the .terraform suffix if it exists
