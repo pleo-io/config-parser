@@ -1,5 +1,5 @@
-s3.sputnik.bucket-name.url=https://sputnik-buckname.name.com
-sqs.sputnik.endpoint.url=21321331241.aws.pleo.io
+sqs.sales.endpoint=https://sputnik-buckname.name.com
+msk.endpoint=https://msk.com
 launch-darkly.key=secret_value
 openai.key=beepboop
 private=password
