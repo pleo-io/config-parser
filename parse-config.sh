@@ -22,7 +22,7 @@ load_dir() {
           KEY=${KEY#"infrastructure.global."}
         fi
 
-        # Removes the application.application_name prefix if it exists
+        # Removes the application.$application_name prefix if it exists
         if [[ $KEY == application."$APPLICATION_NAME".* ]]; then
           KEY=${KEY#"application.$APPLICATION_NAME."}
         fi
