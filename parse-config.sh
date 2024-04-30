@@ -22,14 +22,9 @@ load_dir() {
           KEY=${KEY#"infrastructure.global."}
         fi
         
-        if [[ "$KEY" =~ ^"application." ]]; then
-          KEY=${KEY#"application."}
-        fi
-
-        # [[ "$string" =~ ^$prefix(.*)$suffix$ ]] && echo "${BASH_REMATCH[1]}"
-        PRE="$APPLICATION_NAME."
-        if [[ "$KEY" =~ ^$PRE ]]; then
-          KEY=${KEY#$PRE}
+        # Removes the application.$application_name prefix if it exists
+        if [[ "$KEY" == "application.$APPLICATION_NAME."* ]]; then
+          KEY=${KEY#"application.$APPLICATION_NAME."}
         fi
 
         # Removes the .terraform suffix if it exists
