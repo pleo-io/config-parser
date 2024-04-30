@@ -26,7 +26,8 @@ load_dir() {
           KEY=${KEY#"application."}
         fi
 
-        PRE=$APPLICATION_NAME"."
+        # [[ "$string" =~ ^$prefix(.*)$suffix$ ]] && echo "${BASH_REMATCH[1]}"
+        PRE="$APPLICATION_NAME."
         if [[ "$KEY" =~ ^$PRE ]]; then
           KEY=${KEY#$PRE}
         fi
