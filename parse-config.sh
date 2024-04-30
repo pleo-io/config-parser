@@ -41,6 +41,9 @@ load_dir() {
   echo "$result"
 }
 
+print "hi"
+print $APPLICATION_NAME
+
 # We have 3 directories to load env variables from:
 #   1. $WORKDIR/aws-parameter-store
 #   2. $WORKDIR/aws-secret
