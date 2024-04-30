@@ -26,6 +26,10 @@ load_dir() {
           KEY=${KEY#"application."}
         fi
 
+        if [[ $KEY =~ ^"$3." ]]; then
+          KEY=${KEY#"$3."}
+        fi
+
         # Removes the .terraform suffix if it exists
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
