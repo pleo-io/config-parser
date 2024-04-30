@@ -41,12 +41,10 @@ load_dir() {
 #   2. $WORKDIR/secret
 
 # For SSM, we strip the first character since it's always a '_'
-SSM_VARS=$(load_dir "$WORKDIR/ssm" 1)
-
+SSM_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
 echo "$SSM_VARS"
 
-SECRET_VARS=$(load_dir "$WORKDIR/secret" 0)
-
+SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
 echo "$SECRET_VARS"
 
 ENV_VARS=""
