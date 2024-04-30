@@ -37,23 +37,23 @@ load_dir() {
 }
 
 # We have 3 directories to load env variables from:
-#   1. $WORKDIR/ssm
-#   2. $WORKDIR/secret
+#   1. $WORKDIR/aws-parameter-store
+#   2. $WORKDIR/aws-secret
 
-# For SSM, we strip the first character since it's always a '_'
-SSM_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
-echo "$SSM_VARS"
+# For aws-parameter-store, we strip the first character since it's always a '_'
+AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
+echo "$AWS_PARAMETER_STORE_VARS"
 
-SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
-echo "$SECRET_VARS"
+AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
+echo "$AWS_SECRET_VARS"
 
 ENV_VARS=""
-if [ "$SSM_VARS" != "" ]; then
-  ENV_VARS+="$SSM_VARS"
+if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
+  ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
 fi
 
-if [ "$SECRET_VARS" != "" ]; then
-  ENV_VARS+="$SECRET_VARS"
+if [ "$AWS_SECRET_VARS" != "" ]; then
+  ENV_VARS+="$AWS_SECRET_VARS"
 fi
 
 # Do not use cat here, we use printf to render new lines in output file
