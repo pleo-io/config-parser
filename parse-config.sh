@@ -27,6 +27,11 @@ load_dir() {
           KEY=${KEY#"application."}
         fi
 
+        # Removes the application.$application_name prefix if it exists
+        if [[ "$KEY" == "$APPLICATION_NAME."* ]]; then
+          KEY=${KEY#"$APPLICATION_NAME."}
+        fi
+
         # Removes the .terraform suffix if it exists
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
@@ -40,9 +45,6 @@ load_dir() {
 
   echo "$result"
 }
-
-print "hi"
-print $APPLICATION_NAME
 
 # We have 3 directories to load env variables from:
 #   1. $WORKDIR/aws-parameter-store
