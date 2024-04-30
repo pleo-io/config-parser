@@ -9,8 +9,8 @@ services:
       - WORKDIR
     volumes:
       - env:$WORKDIR
-      - ./test/fixture/volumes/secret:$WORKDIR/secret
-      - ./test/fixture/volumes/ssm:$WORKDIR/ssm
+      - ./test/fixture/volumes/aws-secret:$WORKDIR/aws-secret
+      - ./test/fixture/volumes/aws-parameter-store:$WORKDIR/aws-parameter-store
   validator:
     depends_on: [ env-loader ]
     build:
