@@ -29,7 +29,7 @@ load_dir() {
 
         # Removes the application.$application_name prefix if it exists
         if [[ "$KEY" == "$APPLICATION_NAME."* ]]; then
-          KEY=${KEY#"$APPLICATION_NAME."}
+          KEY=${KEY#$APPLICATION_NAME.}
         fi
 
         # Removes the .terraform suffix if it exists
