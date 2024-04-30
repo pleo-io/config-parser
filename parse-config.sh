@@ -18,17 +18,17 @@ load_dir() {
         KEY="${KEY:$2}"
 
         # Removes the infrastructure.global prefix if it exists
-        if [[ $KEY == infrastructure.global.* ]]; then
+        if [[ "$KEY" == "infrastructure.global."* ]]; then
           KEY=${KEY#"infrastructure.global."}
         fi
 
         # Removes the application.$application_name prefix if it exists
-        if [[ $KEY == application."$APPLICATION_NAME".* ]]; then
+        if [[ "$KEY" == "application.$APPLICATION_NAME."* ]]; then
           KEY=${KEY#"application.$APPLICATION_NAME."}
         fi
 
         # Removes the .terraform suffix if it exists
-        if [[ $KEY == *.terraform ]]; then
+        if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
         fi
 
