@@ -1,5 +1,5 @@
 sqs.sales.endpoint=https://sputnik-buckname.name.com
-msk.endpoint=21321331241.aws.pleo.io
+msk.endpoint=https://msk.com
 launch-darkly.key=secret_value
 openai.key=beepboop
 private=password
