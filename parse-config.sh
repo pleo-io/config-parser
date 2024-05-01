@@ -12,7 +12,7 @@ load_dir() {
       # Make sure the directory is not empty
       if [ "$FILENAME" != "*" ]; then
         # Replaces underscores with dots
-        KEY=$(echo $FILENAME | tr '_' '.')
+        KEY=$(echo "$FILENAME" | tr '_' '.')
 
         # $2, is the numbers of characters to strip in front of the key
         KEY="${KEY:$2}"
@@ -31,8 +31,9 @@ load_dir() {
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
         fi
+        echo "source=$FILENAME destination=$KEY" >&2
 
-        VALUE=$(cat $FILENAME)
+        VALUE=$(cat "$FILENAME")
         result="${result}$KEY=$VALUE\n"
       fi
     done
@@ -46,11 +47,13 @@ load_dir() {
 #   2. $WORKDIR/aws-secret
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
+echo "Loading AWS Parameter Store variables..."
 AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
-echo "$AWS_PARAMETER_STORE_VARS"
+echo "Loaded AWS Parameter Store variables"
 
+echo "Loading AWS Secret variables..."
 AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
-echo "$AWS_SECRET_VARS"
+echo "Loaded AWS Secret variables"
 
 ENV_VARS=""
 if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
@@ -63,4 +66,3 @@ fi
 
 # Do not use cat here, we use printf to render new lines in output file
 printf "$ENV_VARS" > $WORKDIR/application.properties
-
