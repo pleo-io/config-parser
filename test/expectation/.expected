@@ -1,3 +1,4 @@
+kerberos.cache.kerberos-authz.url=kerberos-authz.cache.dev.pleo.io
 sqs.sales.endpoint=https://sputnik-buckname.name.com
 msk.endpoint=https://msk.com
 launch-darkly.key=secret_value
