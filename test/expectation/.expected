@@ -3,3 +3,4 @@ msk.endpoint=https://msk.com
 launch-darkly.key=secret_value
 openai.key=beepboop
 private=password
+kerberos.cache.kerberos-authz.url=kerberos-authz.cache.dev.pleo.io
