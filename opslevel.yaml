@@ -2,15 +2,15 @@
 ---
 version: 1
 service:
-  name: config-parser
-  lifecycle: alpha
-  owner: infrastructure-core
+  name: Config-parser
+  lifecycle: generally_available
+  owner: sre
   language: bash
   description: |-
-    Library in charge parsing config files
+    Library in charge of parsing config files
   repositories:
     - name: pleo-io/config-parser
-      path: "/"
+      path: '/'
       provider: github
   tags:
     - key: type
