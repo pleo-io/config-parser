@@ -4,7 +4,7 @@ version: 1
 service:
   name: config-parser
   lifecycle: alpha
-  owner: sre
+  owner: infrastructure-core
   language: bash
   description: |-
     Library in charge parsing config files
