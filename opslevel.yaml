@@ -2,7 +2,7 @@
 ---
 version: 1
 service:
-  name: config-parser
+  name: Config-parser
   lifecycle: generally_available
   owner: sre
   language: bash
