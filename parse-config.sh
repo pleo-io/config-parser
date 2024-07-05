@@ -4,7 +4,7 @@ log() {
   # UTC time
   TIME=$(date -u +"%FT%TZ")
 
-  # $1 is the message to logged passed as the first - and only - function paramter
+  # $1 is the message to log passed as the first - and only - function paramter
   echo "time=\"${TIME}\" level=INFO msg=\"$1\""
 }
 
