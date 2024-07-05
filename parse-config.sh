@@ -1,5 +1,13 @@
 #!/bin/bash
 
+log() {
+  # UTC time
+  TIME=$(date -u +"%FT%TZ")
+
+  # $1 is the message to log passed as the first - and only - function paramter
+  echo "time=\"${TIME}\" level=INFO msg=\"$1\""
+}
+
 load_dir() {
   local result=''
 
@@ -36,7 +44,7 @@ load_dir() {
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
         fi
-        echo "source=$FILENAME destination=$KEY" >&2
+        log "source=$FILENAME destination=$KEY" >&2
 
         VALUE=$(cat "$FILENAME")
         result="${result}$KEY=$VALUE\n"
@@ -52,13 +60,13 @@ load_dir() {
 #   2. $WORKDIR/aws-secret
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
-echo "Loading AWS Parameter Store variables..."
+log "Loading AWS Parameter Store variables..."
 AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
-echo "Loaded AWS Parameter Store variables"
+log "Loaded AWS Parameter Store variables"
 
-echo "Loading AWS Secret variables..."
+log "Loading AWS Secret variables..."
 AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
-echo "Loaded AWS Secret variables"
+log "Loaded AWS Secret variables"
 
 ENV_VARS=""
 if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
