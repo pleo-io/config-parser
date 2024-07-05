@@ -5,7 +5,7 @@ service:
   name: Config-parser
   lifecycle: generally_available
   owner: team-site-reliability-engineering
-  language: bash
+  language: Bash
   description: |-
     Library in charge of parsing config files
   repositories:
