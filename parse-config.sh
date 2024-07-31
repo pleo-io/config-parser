@@ -17,8 +17,9 @@ load_dir() {
 
     # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
     for FILENAME in *; do
+      LINE_COUNT=$(wc -l <$FILENAME)
       # Make sure the directory is not empty AND that it's not multi-lined
-      if [[ "$FILENAME" != "*" && $(wc -l <$FILENAME) > 1]]; then
+      if [[ "$FILENAME" != "*" && $(($LINE_COUNT > 1))]]; then
         # Replaces underscores with dots
         KEY=$(echo "$FILENAME" | tr '_' '.')
 
