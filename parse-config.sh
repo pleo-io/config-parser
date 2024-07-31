@@ -20,9 +20,11 @@ load_dir() {
       # Make sure the directory is not empty
       if [ "$FILENAME" != "*" ]; then
         VALUE=$(cat "$FILENAME")
+        NL="
+        "
 
         # Make sure the value is not multi-lined
-        if [[ "$VALUE" != *"\n"* ]]; then
+        if [[ "$VALUE" != *"$NL"* ]]; then
           # Replaces underscores with dots
           KEY=$(echo "$FILENAME" | tr '_' '.')
 
