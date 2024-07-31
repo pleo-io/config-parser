@@ -68,6 +68,10 @@ log "Loading AWS Secret variables..."
 AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
 log "Loaded AWS Secret variables"
 
+log "Loading legacy secret..."
+SECRET_VARS=$(load_dir "$WORKDIR/secret-legacy" 0)
+log "Loaded legacy secret"
+
 ENV_VARS=""
 if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
   ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
