@@ -68,10 +68,6 @@ log "Loading AWS Secret variables..."
 AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
 log "Loaded AWS Secret variables"
 
-log "Loading legacy secret..."
-LEGACY_SECRET_VARS=$(load_dir "$WORKDIR/secret-legacy" 0)
-log "Loaded legacy secret"
-
 ENV_VARS=""
 if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
   ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
@@ -79,10 +75,6 @@ fi
 
 if [ "$AWS_SECRET_VARS" != "" ]; then
   ENV_VARS+="$AWS_SECRET_VARS"
-fi
-
-if [ "$LEGACY_SECRET_VARS" != "" ]; then
-  ENV_VARS+="$LEGACY_SECRET_VARS"
 fi
 
 # Do not use cat here, we use printf to render new lines in output file
