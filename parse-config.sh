@@ -19,35 +19,39 @@ load_dir() {
     for FILENAME in *; do
       # Make sure the directory is not empty
       if [ "$FILENAME" != "*" ]; then
-        # Replaces underscores with dots
-        KEY=$(echo "$FILENAME" | tr '_' '.')
-
-        # $2, is the numbers of characters to strip in front of the key
-        KEY="${KEY:$2}"
-
-        # Removes the infrastructure.global prefix if it exists
-        if [[ "$KEY" == "infrastructure.global."* ]]; then
-          KEY=${KEY#"infrastructure.global."}
-        fi
-
-        # Removes the application.global prefix if it exists
-        if [[ "$KEY" == "application.global."* ]]; then
-          KEY=${KEY#"application.global."}
-        fi
-        
-        # Removes the application.$application_name prefix if it exists
-        if [[ "$KEY" == "application.$APPLICATION_NAME."* ]]; then
-          KEY=${KEY#"application.$APPLICATION_NAME."}
-        fi
-
-        # Removes the .terraform suffix if it exists
-        if [[ "$KEY" == *".terraform" ]]; then
-          KEY=${KEY%".terraform"}
-        fi
-        log "source=$FILENAME destination=$KEY" >&2
-
         VALUE=$(cat "$FILENAME")
-        result="${result}$KEY=$VALUE\n"
+
+        # Make sure the value is not multi-lined
+        if [[ "$VALUE" != *"\n"* ]]; then
+          # Replaces underscores with dots
+          KEY=$(echo "$FILENAME" | tr '_' '.')
+
+          # $2, is the numbers of characters to strip in front of the key
+          KEY="${KEY:$2}"
+
+          # Removes the infrastructure.global prefix if it exists
+          if [[ "$KEY" == "infrastructure.global."* ]]; then
+            KEY=${KEY#"infrastructure.global."}
+          fi
+
+          # Removes the application.global prefix if it exists
+          if [[ "$KEY" == "application.global."* ]]; then
+            KEY=${KEY#"application.global."}
+          fi
+          
+          # Removes the application.$application_name prefix if it exists
+          if [[ "$KEY" == "application.$APPLICATION_NAME."* ]]; then
+            KEY=${KEY#"application.$APPLICATION_NAME."}
+          fi
+
+          # Removes the .terraform suffix if it exists
+          if [[ "$KEY" == *".terraform" ]]; then
+            KEY=${KEY%".terraform"}
+          fi
+          log "source=$FILENAME destination=$KEY" >&2
+
+          result="${result}$KEY=$VALUE\n"
+        fi
       fi
     done
   fi
