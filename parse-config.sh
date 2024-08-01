@@ -17,9 +17,10 @@ load_dir() {
 
     # For each file in the directory, append `{FILENAME}={FILEVALUE}'\n` to result string
     for FILENAME in *; do
-      LINE_COUNT=$(wc -l <$FILENAME)
-      # Make sure the directory is not empty AND that it's not multi-lined
-      if [ "$FILENAME" != "*" ] && [ $(($LINE_COUNT > 1)) ]; then
+      FILE_LINE_COUNT=$(wc -l <$FILENAME)
+      
+      # Make sure the directory is not empty AND that it's not multi-lined      
+      if [[ "$FILENAME" != "*" && $(($FILE_LINE_COUNT > 1)) == 0 ]]; then
         # Replaces underscores with dots
         KEY=$(echo "$FILENAME" | tr '_' '.')
 
@@ -45,6 +46,7 @@ load_dir() {
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
         fi
+
         log "source=$FILENAME destination=$KEY" >&2
         
         VALUE=$(cat "$FILENAME")
