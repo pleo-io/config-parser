@@ -47,7 +47,7 @@ load_dir() {
           KEY=${KEY%".terraform"}
         fi
 
-        log "source=$FILENAME destination=$KEY" >&2
+        log "source=$FILENAME destination=$KEY"
         
         VALUE=$(cat "$FILENAME")
         RESULT="${result}$KEY=$VALUE"
