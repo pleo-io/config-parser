@@ -81,4 +81,4 @@ if [ "$AWS_SECRET_VARS" != "" ]; then
 fi
 
 # Do not use cat here, we use printf to render new lines in output file
-printf "$ENV_VARS" > $WORKDIR/application.properties
+printf '%s' "$ENV_VARS" > $WORKDIR/application.properties
