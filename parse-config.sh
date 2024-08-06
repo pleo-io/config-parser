@@ -9,8 +9,6 @@ log() {
 }
 
 load_dir() {
-  local result=''
-
   # $1, the first parameter is the directory to load files from
   if [ -d $1 ]; then
     cd $1
@@ -47,15 +45,14 @@ load_dir() {
           KEY=${KEY%".terraform"}
         fi
 
-        log "source=$FILENAME destination=$KEY" >&2
+        log "source=$FILENAME destination=$KEY"
         
         VALUE=$(cat "$FILENAME")
-        result="${result}$KEY=$VALUE\n"
+        RESULT="$KEY=$VALUE"
+        printf "%s\n" "$RESULT" >> $WORKDIR/application.properties
       fi
     done
   fi
-
-  echo "$result"
 }
 
 # We have 3 directories to load env variables from:
@@ -64,21 +61,9 @@ load_dir() {
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
 log "Loading AWS Parameter Store variables..."
-AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
+load_dir "$WORKDIR/aws-parameter-store" 1
 log "Loaded AWS Parameter Store variables"
 
 log "Loading AWS Secret variables..."
-AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
+load_dir "$WORKDIR/aws-secret" 0
 log "Loaded AWS Secret variables"
-
-ENV_VARS=""
-if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
-  ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
-fi
-
-if [ "$AWS_SECRET_VARS" != "" ]; then
-  ENV_VARS+="$AWS_SECRET_VARS"
-fi
-
-# Do not use cat here, we use printf to render new lines in output file
-printf "$ENV_VARS" > $WORKDIR/application.properties
