@@ -51,7 +51,7 @@ load_dir() {
         
         VALUE=$(cat "$FILENAME")
         RESULT="${result}$KEY=$VALUE"
-        printf "\n%s" "$RESULT" >> $WORKDIR/application.properties
+        printf "%s\n" "$RESULT" >> $WORKDIR/application.properties
       fi
     done
   fi
