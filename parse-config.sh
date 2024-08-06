@@ -50,7 +50,7 @@ load_dir() {
         log "source=$FILENAME destination=$KEY" >&2
         
         VALUE=$(cat "$FILENAME")
-        RESULT="${result}$KEY=$VALUE\n"
+        RESULT="${result}$KEY=$VALUE"
         printf "%s\n" "$RESULT" >> $WORKDIR/application.properties
       fi
     done
