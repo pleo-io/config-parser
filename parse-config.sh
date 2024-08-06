@@ -9,8 +9,6 @@ log() {
 }
 
 load_dir() {
-  local result=''
-
   # $1, the first parameter is the directory to load files from
   if [ -d $1 ]; then
     cd $1
@@ -50,7 +48,7 @@ load_dir() {
         log "source=$FILENAME destination=$KEY"
         
         VALUE=$(cat "$FILENAME")
-        RESULT="${result}$KEY=$VALUE"
+        RESULT="$KEY=$VALUE"
         printf "%s\n" "$RESULT" >> $WORKDIR/application.properties
       fi
     done
