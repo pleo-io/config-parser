@@ -50,12 +50,11 @@ load_dir() {
         log "source=$FILENAME destination=$KEY" >&2
         
         VALUE=$(cat "$FILENAME")
-        result="${result}$KEY=$VALUE\n"
+        RESULT="${result}$KEY=$VALUE\n"
+        printf "%s\n" "$RESULT" >> $WORKDIR/application.properties
       fi
     done
   fi
-
-  echo "$result"
 }
 
 # We have 3 directories to load env variables from:
@@ -63,22 +62,22 @@ load_dir() {
 #   2. $WORKDIR/aws-secret
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
-log "Loading AWS Parameter Store variables..."
-AWS_PARAMETER_STORE_VARS=$(load_dir "$WORKDIR/aws-parameter-store" 1)
-log "Loaded AWS Parameter Store variables"
+# log "Loading AWS Parameter Store variables..."
+load_dir "$WORKDIR/aws-parameter-store" 1
+# log "Loaded AWS Parameter Store variables"
 
-log "Loading AWS Secret variables..."
-AWS_SECRET_VARS=$(load_dir "$WORKDIR/aws-secret" 0)
-log "Loaded AWS Secret variables"
+# log "Loading AWS Secret variables..."
+load_dir "$WORKDIR/aws-secret" 0
+# log "Loaded AWS Secret variables"
 
-ENV_VARS=""
-if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
-  ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
-fi
+# ENV_VARS=""
+# if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
+#   ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
+# fi
 
-if [ "$AWS_SECRET_VARS" != "" ]; then
-  ENV_VARS+="$AWS_SECRET_VARS"
-fi
+# if [ "$AWS_SECRET_VARS" != "" ]; then
+#   ENV_VARS+="$AWS_SECRET_VARS"
+# fi
 
-# Do not use cat here, we use printf to render new lines in output file
-printf '\n%s\n' "$ENV_VARS" > $WORKDIR/application.properties
+# # Do not use cat here, we use printf to render new lines in output file
+# printf '%s' "$ENV_VARS" > $WORKDIR/application.properties
