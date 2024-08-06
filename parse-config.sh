@@ -62,22 +62,10 @@ load_dir() {
 #   2. $WORKDIR/aws-secret
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
-# log "Loading AWS Parameter Store variables..."
+log "Loading AWS Parameter Store variables..."
 load_dir "$WORKDIR/aws-parameter-store" 1
-# log "Loaded AWS Parameter Store variables"
+log "Loaded AWS Parameter Store variables"
 
-# log "Loading AWS Secret variables..."
+log "Loading AWS Secret variables..."
 load_dir "$WORKDIR/aws-secret" 0
-# log "Loaded AWS Secret variables"
-
-# ENV_VARS=""
-# if [ "$AWS_PARAMETER_STORE_VARS" != "" ]; then
-#   ENV_VARS+="$AWS_PARAMETER_STORE_VARS"
-# fi
-
-# if [ "$AWS_SECRET_VARS" != "" ]; then
-#   ENV_VARS+="$AWS_SECRET_VARS"
-# fi
-
-# # Do not use cat here, we use printf to render new lines in output file
-# printf '%s' "$ENV_VARS" > $WORKDIR/application.properties
+log "Loaded AWS Secret variables"
