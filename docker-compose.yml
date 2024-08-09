@@ -11,6 +11,7 @@ services:
     volumes:
       - env:$WORKDIR
       - ./test/fixture/volumes/aws-secret:$WORKDIR/aws-secret
+      - ./test/fixture/volumes/aws-secret-application:$WORKDIR/aws-secret-application
       - ./test/fixture/volumes/aws-parameter-store:$WORKDIR/aws-parameter-store
   validator:
     depends_on: [ env-loader ]
