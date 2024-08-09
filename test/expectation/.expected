@@ -5,3 +5,4 @@ launch-darkly.key=secret_value
 openai.key=beepboop
 private=password
 with.special.chars=@sbSZN%r!r!&9bgE%x&IC%2Bh952U%jD!o&Tww4^ztH#ds@3R44
+auth_password=password

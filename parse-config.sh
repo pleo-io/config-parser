@@ -20,10 +20,14 @@ load_dir() {
       # Make sure the directory is not empty AND that it's not multi-lined      
       if [[ "$FILENAME" != "*" && $(($FILE_LINE_COUNT > 1)) == 0 ]]; then
         # Replaces underscores with dots
-        KEY=$(echo "$FILENAME" | tr '_' '.')
 
-        # $2, is the numbers of characters to strip in front of the key
-        KEY="${KEY:$2}"
+        # $2, is wether ot not to remap `_` to `.` in the key
+        if [[ $2 ]]; then
+          KEY=$(echo "$FILENAME" | tr '_' '.')
+        fi
+
+        # $3, is the numbers of characters to strip in front of the key
+        KEY="${KEY:$3}"
 
         # Removes the infrastructure.global prefix if it exists
         if [[ "$KEY" == "infrastructure.global."* ]]; then
@@ -61,9 +65,13 @@ load_dir() {
 
 # For aws-parameter-store, we strip the first character since it's always a '_'
 log "Loading AWS Parameter Store variables..."
-load_dir "$WORKDIR/aws-parameter-store" 1
+load_dir "$WORKDIR/aws-parameter-store" true 1
 log "Loaded AWS Parameter Store variables"
 
 log "Loading AWS Secret variables..."
-load_dir "$WORKDIR/aws-secret" 0
+load_dir "$WORKDIR/aws-secret" true 0
 log "Loaded AWS Secret variables"
+
+log "Loading AWS Application Secret variables..."
+load_dir "$WORKDIR/aws-secret-application" false 0
+log "Loaded AWS Application Secret variables"
