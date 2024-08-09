@@ -22,8 +22,9 @@ load_dir() {
         # Replaces underscores with dots
 
         # $2, is wether ot not to remap `_` to `.` in the key
+        KEY=$(echo "$FILENAME")
         if [ "$2" = true ]; then
-          KEY=$(echo "$FILENAME" | tr '_' '.')
+          KEY=$(echo "$KEY" | tr '_' '.')
         fi
 
         # $3, is the numbers of characters to strip in front of the key
