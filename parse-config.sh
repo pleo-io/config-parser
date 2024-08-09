@@ -22,7 +22,7 @@ load_dir() {
         # Replaces underscores with dots
 
         # $2, is wether ot not to remap `_` to `.` in the key
-        if [[ "$2" == "true" ]]; then
+        if [ "$2" = true ]; then
           KEY=$(echo "$FILENAME" | tr '_' '.')
         fi
 
