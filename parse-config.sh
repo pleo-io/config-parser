@@ -30,38 +30,24 @@ load_dir() {
         # $3, is the numbers of characters to strip in front of the key
         KEY="${KEY:$3}"
 
-        # Removes the infrastructure.global prefix if it exists
+        # Removes the infrastructure.global. prefix if it exists
         if [[ "$KEY" == "infrastructure.global."* ]]; then
           KEY=${KEY#"infrastructure.global."}
         fi
 
-        if [[ "$KEY" =~ infrastructure\.[^.]+\.global\..+ ]]; then
-          # Remove 'infrastructure.' prefix
-          TEMP=${KEY#infrastructure.}
-
-          # Split off the part after 'global.'
-          PART_BEFORE_GLOBAL=${TEMP%%.global.*}
-          PART_AFTER_GLOBAL=${TEMP#*.global.}
-
-          # Combine the parts
-          KEY="${PART_BEFORE_GLOBAL}.${PART_AFTER_GLOBAL}"
+        # Removes the infrastructure. prefix if it exists
+        if [[ "$KEY" == "infrastructure."* ]]; then
+          KEY=${KEY#"infrastructure."}
         fi
 
-        # Removes the application.global prefix if it exists
+        # Removes the application.global. prefix if it exists
         if [[ "$KEY" == "application.global."* ]]; then
           KEY=${KEY#"application.global."}
         fi
 
-        if [[ "$KEY" =~ application\.[^.]+\.global\..+ ]]; then
-          # Remove 'application.' prefix
-          TEMP=${KEY#application.}
-
-          # Split off the part after 'global.'
-          PART_BEFORE_GLOBAL=${TEMP%%.global.*}
-          PART_AFTER_GLOBAL=${TEMP#*.global.}
-
-          # Combine the parts
-          KEY="${PART_BEFORE_GLOBAL}.${PART_AFTER_GLOBAL}"
+        # Removes the application. prefix if it exists
+        if [[ "$KEY" == "application."* ]]; then
+          KEY=${KEY#"application."}
         fi
         
         # Removes the application.$application_name prefix if it exists
