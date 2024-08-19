@@ -35,11 +35,13 @@ load_dir() {
           KEY=${KEY#"application.$APPLICATION_NAME."}
         fi
 
+        # TODO: remove when not needed - we use tag source instead
         # Removes the .terraform suffix if it exists
         if [[ "$KEY" == *".terraform" ]]; then
           KEY=${KEY%".terraform"}
         fi
 
+        # TODO: remove when not needed - we use tag visibility instead
         # Removes the infrastructure.global. prefix if it exists
         if [[ "$KEY" == "infrastructure.global."* ]]; then
           KEY=${KEY#"infrastructure.global."}
@@ -50,6 +52,7 @@ load_dir() {
           KEY=${KEY#"infrastructure."}
         fi
 
+        # TODO: remove when not needed - we use tag visibility instead
         # Removes the application.global. prefix if it exists
         if [[ "$KEY" == "application.global."* ]]; then
           KEY=${KEY#"application.global."}
