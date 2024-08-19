@@ -35,9 +35,33 @@ load_dir() {
           KEY=${KEY#"infrastructure.global."}
         fi
 
+        if [[ "$KEY" =~ infrastructure\.[^.]+\.global\..+ ]]; then
+          # Remove 'infrastructure.' prefix
+          TEMP=${KEY#infrastructure.}
+
+          # Split off the part after 'global.'
+          PART_BEFORE_GLOBAL=${TEMP%%.global.*}
+          PART_AFTER_GLOBAL=${TEMP#*.global.}
+
+          # Combine the parts
+          KEY="${PART_BEFORE_GLOBAL}.${PART_AFTER_GLOBAL}"
+        fi
+
         # Removes the application.global prefix if it exists
         if [[ "$KEY" == "application.global."* ]]; then
           KEY=${KEY#"application.global."}
+        fi
+
+        if [[ "$KEY" =~ application\.[^.]+\.global\..+ ]]; then
+          # Remove 'application.' prefix
+          TEMP=${KEY#application.}
+
+          # Split off the part after 'global.'
+          PART_BEFORE_GLOBAL=${TEMP%%.global.*}
+          PART_AFTER_GLOBAL=${TEMP#*.global.}
+
+          # Combine the parts
+          KEY="${PART_BEFORE_GLOBAL}.${PART_AFTER_GLOBAL}"
         fi
         
         # Removes the application.$application_name prefix if it exists
@@ -76,3 +100,5 @@ log "Loaded AWS Secret variables"
 log "Loading AWS Application Secret variables..."
 load_dir "$WORKDIR/aws-secret-application" false 0
 log "Loaded AWS Application Secret variables"
+
+sort "$WORKDIR/application.properties" | uniq > "$WORKDIR/temp.properties" && mv "$WORKDIR/temp.properties" "$WORKDIR/application.properties"
