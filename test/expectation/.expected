@@ -1,4 +1,5 @@
 auth_password=password
+authentication.allowed.issuers=["pleo.production", "pleo.openapi.production"]
 kerberos.cache.kerberos-authz.url=kerberos-authz.cache.dev.pleo.io
 launch-darkly.key=secret_value
 msk.endpoint=https://msk.com
