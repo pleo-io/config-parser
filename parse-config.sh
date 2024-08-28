@@ -29,11 +29,6 @@ load_dir() {
 
         # $3, is the numbers of characters to strip in front of the key
         KEY="${KEY:$3}"
-        
-        # Removes the application.$application_name prefix if it exists
-        if [[ "$KEY" == "application.$APPLICATION_NAME."* ]]; then
-          KEY=${KEY#"application.$APPLICATION_NAME."}
-        fi
 
         # TODO: remove when not needed - we use tag source instead
         # Removes the .terraform suffix if it exists
@@ -52,15 +47,9 @@ load_dir() {
           KEY=${KEY#"infrastructure."}
         fi
 
-        # TODO: remove when not needed - we use tag visibility instead
-        # Removes the application.global. prefix if it exists
-        if [[ "$KEY" == "application.global."* ]]; then
-          KEY=${KEY#"application.global."}
-        fi
-
-        # Removes the application. prefix if it exists
-        if [[ "$KEY" == "application."* ]]; then
-          KEY=${KEY#"application."}
+        # Removes the application.<anything>. prefix if it exists
+        if [[ "$KEY" == application.*.* ]]; then
+          KEY=${KEY#application.*.}
         fi
 
         log "source=$FILENAME destination=$KEY"
