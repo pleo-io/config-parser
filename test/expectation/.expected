@@ -4,5 +4,6 @@ launch-darkly.key=secret_value
 msk.endpoint=https://msk.com
 openai.key=beepboop
 private=password
+redis.kerberos-authz.url=kerberos-authz.cache.dev.pleo.io
 sqs.sales.endpoint=https://sputnik-buckname.name.com
 with.special.chars=@sbSZN%r!r!&9bgE%x&IC%2Bh952U%jD!o&Tww4^ztH#ds@3R44
